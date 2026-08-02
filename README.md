@@ -308,7 +308,7 @@ SOFTWARE.
 
 ---
 
-## 🙏 Acknowledgments
+## (●'◡'●) Acknowledgments
 
 - [JetBrains](https://www.jetbrains.com/) for Kotlin
 - [Google](https://developer.android.com/) for Android and Jetpack Compose
