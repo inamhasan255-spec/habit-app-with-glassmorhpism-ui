@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Outer isometric hexagon boundary for the 3D Cube -->
+    <path
+        android:fillColor="#115adcb3"
+        android:strokeColor="#5adcb3"
+        android:strokeWidth="3.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M54,26 L78,40 L78,68 L54,82 L30,68 L30,40 Z" />
+
+    <!-- Inner edges dividing the faces -->
+    <path
+        android:strokeColor="#5adcb3"
+        android:strokeWidth="2.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M54,54 L54,82 M54,54 L30,40 M54,54 L78,40" />
+
+    <!-- Focus glowing center dot inside the 3D cube -->
+    <path
+        android:fillColor="#C9B8FF"
+        android:pathData="M51,54a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+        
+</vector>

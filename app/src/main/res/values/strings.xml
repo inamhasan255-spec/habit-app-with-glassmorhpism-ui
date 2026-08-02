@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Lumina</string>
+    <string name="empty_string" translatable="false"></string>
+</resources>

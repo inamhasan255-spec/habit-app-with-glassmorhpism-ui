@@ -1,0 +1,19 @@
+            val finalHue = (baseHue + star.hueOffset) % 360f
+            // If the theme is bright, we can make the stars darker.
+            // But we already assume a dark space background in the prompt: "match their preferred productivity environment".
+            // Since it says "bright UI", we can make stars colored or dark grey.
+            val starColor = if (isDarkTheme) {
+                androidx.compose.ui.graphics.Color.hsv(
+                    hue = finalHue,
+                    saturation = 0.6f,
+                    value = 1f,
+                    alpha = 0.3f + 0.7f * twinkle
+                )
+            } else {
+                androidx.compose.ui.graphics.Color.hsv(
+                    hue = finalHue,
+                    saturation = 0.8f,
+                    value = 0.4f, // darker for bright background
+                    alpha = 0.3f + 0.7f * twinkle
+                )
+            }

@@ -1,0 +1,9 @@
+    val isDark = false // Forced bright UI for Academic Portal
+    
+    // Theming Colors
+    val baseBgColor = Color(0xFFF8FAFC) // Light backdrop
+    val cardBgColor = Color(0xFFFFFFFF)
+    val borderCol = Color(0xFFE2E8F0)
+    val txtPrimary = Color(0xFF0F172A)
+    val txtSecondary = Color(0xFF64748B)
+    val accentColor = Color(0xFF10B981) // scholarly green

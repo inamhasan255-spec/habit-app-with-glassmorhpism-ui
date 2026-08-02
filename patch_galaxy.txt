@@ -1,0 +1,119 @@
+        // GALAXY BACKGROUND EFFECTS SECTION
+        Text(text = "GALAXY BACKGROUND EFFECTS", color = accentColor, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(22.dp))
+                .background(viewModel.themeGlassFill)
+                .border(1.dp, viewModel.themeGlassBorder, RoundedCornerShape(22.dp))
+                .padding(18.dp)
+        ) {
+            val galaxyVisible by viewModel.galaxyVisible.collectAsState()
+            val galaxySpeed by viewModel.galaxyStarSpeed.collectAsState()
+            val galaxyHue by viewModel.galaxyHueShift.collectAsState()
+
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Enable Galaxy Background",
+                            color = viewModel.themeText,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Show starry background (Dark Mode only)",
+                            color = viewModel.themeTextSecondary,
+                            fontSize = 12.sp
+                        )
+                    }
+                    Switch(
+                        checked = galaxyVisible,
+                        onCheckedChange = { viewModel.updateGalaxyPreferences(it, galaxySpeed, galaxyHue) },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = accentColor,
+                            uncheckedThumbColor = Color.Gray,
+                            uncheckedTrackColor = Color.LightGray.copy(alpha = 0.5f)
+                        )
+                    )
+                }
+
+                if (galaxyVisible) {
+                    Divider(
+                        modifier = Modifier.padding(vertical = 14.dp),
+                        color = viewModel.themeDivider
+                    )
+                    
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Star Speed",
+                                color = viewModel.themeText,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = String.format("%.1fx", galaxySpeed),
+                                color = accentColor,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                        Slider(
+                            value = galaxySpeed,
+                            onValueChange = { newVal ->
+                                viewModel.updateGalaxyPreferences(galaxyVisible, newVal, galaxyHue)
+                            },
+                            valueRange = 0.1f..5.0f,
+                            colors = SliderDefaults.colors(
+                                thumbColor = accentColor,
+                                activeTrackColor = accentColor,
+                                inactiveTrackColor = viewModel.themeDivider
+                            )
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Hue Shift",
+                                color = viewModel.themeText,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                        Slider(
+                            value = galaxyHue,
+                            onValueChange = { newVal ->
+                                viewModel.updateGalaxyPreferences(galaxyVisible, galaxySpeed, newVal)
+                            },
+                            valueRange = 0f..360f,
+                            colors = SliderDefaults.colors(
+                                thumbColor = accentColor,
+                                activeTrackColor = accentColor,
+                                inactiveTrackColor = viewModel.themeDivider
+                            )
+                        )
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))

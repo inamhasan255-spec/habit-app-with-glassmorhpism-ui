@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissions for notifications and reminders -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication">
+        
+        <activity
+            android:name="com.example.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyApplication">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.focuscube.core.intercept.FlashcardInterceptActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.Transparent"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:launchMode="singleTop" />
+
+        <!-- BroadcastReceiver for scheduled daily habit reminders -->
+        <receiver 
+            android:name="com.example.data.ReminderReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- Foreground Service for active app usage monitoring and overlay trigger -->
+        <service
+            android:name="com.example.data.FocusShieldService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="App blocking and digital well-being features during focus timers." />
+        </service>
+
+        <!-- Foreground Service for background audio synthesis and playback -->
+        <service
+            android:name="com.example.data.AudioPlaybackService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="false" />
+
+        <!-- Accessibility Service for strict block and anti-bypass system lock -->
+        <service
+            android:name="com.focuscube.core.service.HardenedBlockerService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true"
+            android:label="Focus Cube Guard Accessibility Blocker">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- 2x1 Focus Widget -->
+        <receiver
+            android:name="com.example.ui.widget.FocusWidget"
+            android:exported="true"
+            android:label="FocusCube Widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/focus_widget_info" />
+        </receiver>
+
+        <!-- Productivity Summary Widget -->
+        <receiver
+            android:name="com.example.ui.widget.ProductivityGlanceWidgetReceiver"
+            android:exported="true"
+            android:label="Productivity Summary">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/productivity_glance_widget_info" />
+        </receiver>
+
+        <!-- Focus Cube Glance Widget -->
+        <receiver
+            android:name="com.focuscube.ui.widget.FocusCubeGlanceWidgetReceiver"
+            android:exported="true"
+            android:label="Focus Cube Guard Glance">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/focus_cube_glance_widget_info" />
+        </receiver>
+        
+    </application>
+
+</manifest>

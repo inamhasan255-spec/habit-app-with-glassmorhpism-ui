@@ -1,0 +1,8 @@
+{
+    "name": "FocusCube",
+    "description": "Lumina \u2014 Focus, refined. Premium aesthetic productivity suite featuring glassmorphism, floating ambient soundscapes, fluid focus ring timers, interactive task flows, and server-side Gemini intelligence.",
+    "requestFramePermissions": [],
+    "majorCapabilities": [
+        "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+    ]
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:pathData="M0,0h108v108h-108z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="0"
+                android:startY="0"
+                android:endX="108"
+                android:endY="108"
+                android:type="linear">
+                <item android:color="#0A0A12" android:offset="0.0" />
+                <item android:color="#1A152E" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- Add some subtle technological grid dots to the launcher background -->
+    <path
+        android:fillColor="#15FFFFFF"
+        android:pathData="M20,20h2v2h-2z M40,20h2v2h-2z M60,20h2v2h-2z M80,20h2v2h-2z M20,40h2v2h-2z M40,40h2v2h-2z M60,40h2v2h-2z M80,40h2v2h-2z M20,60h2v2h-2z M40,60h2v2h-2z M60,60h2v2h-2z M80,60h2v2h-2z M20,80h2v2h-2z M40,80h2v2h-2z M60,80h2v2h-2z M80,80h2v2h-2z" />
+</vector>
