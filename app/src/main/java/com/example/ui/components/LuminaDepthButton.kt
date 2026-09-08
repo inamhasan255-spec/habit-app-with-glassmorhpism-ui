@@ -237,15 +237,17 @@ fun DepthIconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isLoading: Boolean = false,
+    contentDescription: String? = null,
     tooltipText: String? = null,
     content: @Composable () -> Unit
 ) {
+    val effectiveTooltip = tooltipText ?: contentDescription
     LiquidMetalButton(
         onClick = onClick,
         modifier = modifier.size(46.dp),
         enabled = enabled,
         isLoading = isLoading,
-        tooltipText = tooltipText
+        tooltipText = effectiveTooltip
     ) {
         CompositionLocalProvider(
             LocalContentColor provides Color(0xFF666666)

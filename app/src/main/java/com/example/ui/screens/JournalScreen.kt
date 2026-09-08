@@ -137,8 +137,11 @@ fun JournalScreen(
                                     fontFamily = FontFamily.Serif
                                 )
                             )
-                            com.example.ui.components.DepthIconButton(onClick = { viewModel.showReflectionTrigger = false }) {
-                                Icon(Icons.Default.DeleteOutline, contentDescription = "Dismiss", tint = Color.Gray)
+                            com.example.ui.components.DepthIconButton(
+                                onClick = { viewModel.showReflectionTrigger = false },
+                                contentDescription = "Dismiss Reflection"
+                            ) {
+                                Icon(Icons.Default.DeleteOutline, contentDescription = "Dismiss Reflection", tint = Color.Gray)
                             }
                         }
 
@@ -258,9 +261,10 @@ fun JournalScreen(
                             onClick = {
                                 currentPromptIdx = (currentPromptIdx + 1) % prompts.size
                             },
+                            contentDescription = "Get New Prompt",
                             modifier = Modifier.testTag("refresh_prompt_button")
                         ) {
-                            Icon(Icons.Default.Refresh, contentDescription = "New Prompt", tint = softGold)
+                            Icon(Icons.Default.Refresh, contentDescription = "Get New Prompt", tint = softGold)
                         }
                     }
 
@@ -511,10 +515,13 @@ fun JournalEntryRow(
                         )
                     }
                 }
-                com.example.ui.components.DepthIconButton(onClick = onDelete) {
+                com.example.ui.components.DepthIconButton(
+                    onClick = onDelete,
+                    contentDescription = "Delete journal entry"
+                ) {
                     Icon(
                         imageVector = Icons.Default.DeleteOutline,
-                        contentDescription = "Delete entry",
+                        contentDescription = "Delete journal entry",
                         tint = Color.Red.copy(alpha = 0.6f)
                     )
                 }
