@@ -280,6 +280,7 @@ fun GlassIconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isLoading: Boolean = false,
+    tooltipText: String? = null,
     variant: GlassButtonVariant = GlassButtonVariant.Primary,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -292,25 +293,30 @@ fun GlassIconButton(
 
     val isSecondary = variant == GlassButtonVariant.Secondary
 
-    Box(
+    HoverTooltip(
+        text = tooltipText ?: "",
+        enabled = !tooltipText.isNullOrEmpty(),
         modifier = modifier
-            .scale(scale)
-            .alpha(opacity)
-            .size(44.dp)
-            .clip(shape)
-            .border(
-                width = 1.dp,
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color.White.copy(alpha = 0.4f),
-                        Color.Transparent,
-                        Color.Black.copy(alpha = 0.25f)
-                    )
-                ),
-                shape = shape
-            ),
-        contentAlignment = Alignment.Center
     ) {
+        Box(
+            modifier = Modifier
+                .scale(scale)
+                .alpha(opacity)
+                .size(44.dp)
+                .clip(shape)
+                .border(
+                    width = 1.dp,
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.White.copy(alpha = 0.4f),
+                            Color.Transparent,
+                            Color.Black.copy(alpha = 0.25f)
+                        )
+                    ),
+                    shape = shape
+                ),
+            contentAlignment = Alignment.Center
+        ) {
         if (!isSecondary) {
             androidx.compose.material3.IconButton(
                 onClick = onClick,
@@ -363,4 +369,5 @@ fun GlassIconButton(
             }
         }
     }
+}
 }
