@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
@@ -26,6 +28,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -79,9 +82,18 @@ fun InteractiveTodoList(
                         }
                     }
                 ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add Task")
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add task")
                 }
             },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    if (newTaskTitle.isNotBlank()) {
+                        onAddTodo(newTaskTitle)
+                        newTaskTitle = ""
+                    }
+                }
+            ),
             singleLine = true,
             shape = RoundedCornerShape(12.dp)
         )
@@ -164,7 +176,7 @@ fun InteractiveTodoList(
                             com.example.ui.components.GlassIconButton(onClick = {}) {
                                 Icon(
                                     imageVector = Icons.Default.DragHandle,
-                                    contentDescription = "Drag Handle",
+                                    contentDescription = "Reorder task '${todo.title}'",
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                                 )
                             }
@@ -178,7 +190,7 @@ fun InteractiveTodoList(
                             ) {
                                 Icon(
                                     imageVector = if (todo.isCompleted) Icons.Default.CheckCircle else Icons.Outlined.Circle,
-                                    contentDescription = "Toggle Complete",
+                                    contentDescription = if (todo.isCompleted) "Mark task '${todo.title}' as incomplete" else "Mark task '${todo.title}' as complete",
                                     tint = if (todo.isCompleted) Color(0xFF4CAF50) else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
@@ -196,7 +208,7 @@ fun InteractiveTodoList(
                             com.example.ui.components.GlassIconButton(onClick = { onDelete(todo.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.Delete,
-                                    contentDescription = "Delete Task",
+                                    contentDescription = "Delete task '${todo.title}'",
                                     tint = MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                                 )
                             }
