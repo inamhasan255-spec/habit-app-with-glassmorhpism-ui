@@ -161,10 +161,13 @@ fun InteractiveTodoList(
                                 .padding(horizontal = 16.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            com.example.ui.components.GlassIconButton(onClick = {}) {
+                            com.example.ui.components.GlassIconButton(
+                                onClick = {},
+                                contentDescription = "Reorder task"
+                            ) {
                                 Icon(
                                     imageVector = Icons.Default.DragHandle,
-                                    contentDescription = "Drag Handle",
+                                    contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                                 )
                             }
