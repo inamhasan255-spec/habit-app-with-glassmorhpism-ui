@@ -1,0 +1,3 @@
+## 2025-05-15 - Accessibility Semantics for Custom Glass Icon Buttons
+**Learning:** Custom UI components wrapped around `Box` and `clickable` modifiers (like `GlassIconButton`) need explicit accessibility semantics (`Modifier.semantics { this.contentDescription = ... }`) on the outer container. Standard `Icon` `contentDescription` inside custom button wrappers may not be read by TalkBack or screen readers if the parent clickable surface lacks clear button semantics and content description.
+**Action:** Always provide a `contentDescription` parameter on custom icon button wrappers and pass it to `Modifier.semantics`, setting inner `Icon` `contentDescription` to `null` to prevent redundant readings.
