@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -282,6 +284,7 @@ fun GlassIconButton(
     isLoading: Boolean = false,
     variant: GlassButtonVariant = GlassButtonVariant.Primary,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
+    contentDescription: String? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable () -> Unit
 ) {
@@ -342,6 +345,11 @@ fun GlassIconButton(
                         endY = 40f
                     )
                 )
+                .semantics {
+                    if (contentDescription != null) {
+                        this.contentDescription = contentDescription
+                    }
+                }
                 .clickable(
                     interactionSource = interactionSource,
                     indication = androidx.compose.foundation.LocalIndication.current,

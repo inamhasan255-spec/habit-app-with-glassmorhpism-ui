@@ -162,21 +162,23 @@ fun ChatScreen(
             actions = {
                 com.example.ui.components.GlassIconButton(
                     onClick = { showQuickVoiceDialog = true },
+                    contentDescription = "Quick Voice Task/Goal Entry",
                     modifier = Modifier.testTag("quick_voice_entry_header_btn")
                 ) {
                     Icon(
                         imageVector = Icons.Default.Mic,
-                        contentDescription = "Quick Voice Task/Goal Entry",
+                        contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
                 com.example.ui.components.GlassIconButton(
                     onClick = { viewModel.clearChatHistory() },
+                    contentDescription = "Clear chat history",
                     modifier = Modifier.testTag("clear_chat_button")
                 ) {
                     Icon(
                         imageVector = Icons.Default.DeleteSweep,
-                        contentDescription = "Clear chat history",
+                        contentDescription = null,
                         tint = MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                     )
                 }
@@ -337,6 +339,7 @@ fun ChatScreen(
                             micPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
                         }
                     },
+                    contentDescription = if (isListening) "Stop listening" else "Start voice input",
                     modifier = Modifier
                         .background(
                             if (isListening) Color.Red.copy(alpha = 0.2f) else MaterialTheme.colorScheme.secondaryContainer,
@@ -346,7 +349,7 @@ fun ChatScreen(
                 ) {
                     Icon(
                         imageVector = if (isListening) Icons.Default.MicOff else Icons.Default.Mic,
-                        contentDescription = "Mic",
+                        contentDescription = null,
                         tint = if (isListening) Color.Red else MaterialTheme.colorScheme.onSecondaryContainer
                     )
                 }
@@ -358,6 +361,7 @@ fun ChatScreen(
                             userInput = ""
                         }
                     },
+                    contentDescription = "Send Message",
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
                         .testTag("send_chat_button"),
@@ -365,7 +369,7 @@ fun ChatScreen(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Send,
-                        contentDescription = "Send Message",
+                        contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
