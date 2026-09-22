@@ -1,1 +1,10 @@
-Nothing needs to be added to the .gitignore file since only a README.md file was modified and no build artifacts, dependencies, or temporary files were detected in the changes.
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/app/build
+/captures
+.externalNativeBuild
+.cxx
