@@ -15,6 +15,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.ui.theme.LuminaTheme
@@ -25,6 +31,7 @@ fun GlassToggle(
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    contentDescription: String? = null,
     width: Dp = 52.dp,
     height: Dp = 32.dp,
     thumbSize: Dp = 24.dp,
@@ -73,6 +80,13 @@ fun GlassToggle(
 
     Box(
         modifier = modifier
+            .semantics(mergeDescendants = true) {
+                if (contentDescription != null) {
+                    this.contentDescription = contentDescription
+                }
+                this.role = Role.Switch
+                this.toggleableState = ToggleableState(checked)
+            }
             .width(width)
             .height(height)
             .clip(CircleShape)
@@ -81,7 +95,8 @@ fun GlassToggle(
             .clickable(
                 interactionSource = interactionSource,
                 indication = null, // Disable default ripple for custom tactile feel
-                enabled = enabled
+                enabled = enabled,
+                role = Role.Switch
             ) {
                 onCheckedChange(!checked)
             },
