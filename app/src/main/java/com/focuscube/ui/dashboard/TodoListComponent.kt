@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
@@ -18,6 +20,7 @@ import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -65,19 +68,24 @@ fun InteractiveTodoList(
         }
 
         // Add New Task Input
+        val submitTask = {
+            if (newTaskTitle.isNotBlank()) {
+                onAddTodo(newTaskTitle.trim())
+                newTaskTitle = ""
+            }
+        }
+
         OutlinedTextField(
             value = newTaskTitle,
             onValueChange = { newTaskTitle = it },
             placeholder = { Text("Add a new task...") },
             modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { submitTask() }),
             trailingIcon = {
                 com.example.ui.components.GlassIconButton(
-                    onClick = {
-                        if (newTaskTitle.isNotBlank()) {
-                            onAddTodo(newTaskTitle)
-                            newTaskTitle = ""
-                        }
-                    }
+                    onClick = submitTask,
+                    enabled = newTaskTitle.isNotBlank()
                 ) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Add Task")
                 }
@@ -161,14 +169,12 @@ fun InteractiveTodoList(
                                 .padding(horizontal = 16.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            com.example.ui.components.GlassIconButton(onClick = {}) {
-                                Icon(
-                                    imageVector = Icons.Default.DragHandle,
-                                    contentDescription = "Drag Handle",
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Icon(
+                                imageVector = Icons.Default.DragHandle,
+                                contentDescription = "Reorder task ${todo.title}",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
                             
                             com.example.ui.components.GlassIconButton(
                                 onClick = {
@@ -178,7 +184,7 @@ fun InteractiveTodoList(
                             ) {
                                 Icon(
                                     imageVector = if (todo.isCompleted) Icons.Default.CheckCircle else Icons.Outlined.Circle,
-                                    contentDescription = "Toggle Complete",
+                                    contentDescription = if (todo.isCompleted) "Mark task '${todo.title}' as incomplete" else "Mark task '${todo.title}' as complete",
                                     tint = if (todo.isCompleted) Color(0xFF4CAF50) else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
@@ -196,7 +202,7 @@ fun InteractiveTodoList(
                             com.example.ui.components.GlassIconButton(onClick = { onDelete(todo.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.Delete,
-                                    contentDescription = "Delete Task",
+                                    contentDescription = "Delete task ${todo.title}",
                                     tint = MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                                 )
                             }
