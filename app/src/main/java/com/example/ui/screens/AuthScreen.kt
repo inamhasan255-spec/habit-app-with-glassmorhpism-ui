@@ -579,10 +579,13 @@ fun AuthScreen(viewModel: FocusViewModel) {
                                         )
                                     },
                                     trailingIcon = {
-                                        com.example.ui.components.GlassIconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                                        com.example.ui.components.GlassIconButton(
+                                            onClick = { isPasswordVisible = !isPasswordVisible },
+                                            contentDescription = if (isPasswordVisible) "Hide password" else "Show password"
+                                        ) {
                                             Icon(
                                                 imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                                contentDescription = "Toggle password visibility",
+                                                contentDescription = null,
                                                 tint = Color.White.copy(alpha = 0.6f),
                                                 modifier = Modifier.size(18.dp)
                                             )
