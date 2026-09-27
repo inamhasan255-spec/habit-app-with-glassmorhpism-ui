@@ -1,0 +1,3 @@
+## 2025-05-18 - Jetpack Compose GlassIconButton Accessibility & Hover Tooltips
+**Learning:** Icon-only buttons in Compose require high-level semantics labeling (`semantics { contentDescription = label }` and `onClickLabel`) on the outer clickable container, while child vector icons should have `contentDescription = null` to avoid redundant accessibility announcements by TalkBack. Additionally, wrapping custom icon buttons in a hover tooltip handler provides essential affordance for mouse/hover interactions without altering mobile touch behavior.
+**Action:** Always provide optional `contentDescription` and `tooltipText` parameters on reusable icon button composables, delegating child icon descriptions to `null`.
