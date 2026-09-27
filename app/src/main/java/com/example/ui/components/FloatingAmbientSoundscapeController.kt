@@ -198,11 +198,13 @@ fun FloatingAmbientSoundscapeController(
                         // Play / Pause Quick Button
                         GlassIconButton(
                             onClick = { viewModel.toggleWhiteNoisePlayingAnytime() },
+                            contentDescription = if (isPlaying) "Pause Ambient Sound" else "Play Ambient Sound",
+                            tooltipText = if (isPlaying) "Pause" else "Play",
                             modifier = Modifier.size(28.dp)
                         ) {
                             Icon(
                                 imageVector = if (isPlaying) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
-                                contentDescription = "Toggle Play",
+                                contentDescription = null,
                                 tint = textColor,
                                 modifier = Modifier.size(16.dp)
                             )
@@ -291,11 +293,13 @@ fun FloatingAmbientSoundscapeController(
                                             offsetX = 0f
                                             offsetY = 0f
                                         },
+                                        contentDescription = "Reset Soundscape Position",
+                                        tooltipText = "Reset Position",
                                         modifier = Modifier.size(32.dp)
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.RestartAlt,
-                                            contentDescription = "Reset Position",
+                                            contentDescription = null,
                                             tint = textColor.copy(alpha = 0.8f),
                                             modifier = Modifier.size(18.dp)
                                         )
@@ -305,11 +309,13 @@ fun FloatingAmbientSoundscapeController(
                                 // Minimize Button
                                 GlassIconButton(
                                     onClick = { isExpanded = false },
+                                    contentDescription = "Collapse Soundscape Controller",
+                                    tooltipText = "Collapse",
                                     modifier = Modifier.size(32.dp)
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Close,
-                                        contentDescription = "Collapse",
+                                        contentDescription = null,
                                         tint = textColor,
                                         modifier = Modifier.size(18.dp)
                                     )

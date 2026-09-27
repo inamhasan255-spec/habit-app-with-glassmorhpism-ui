@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -280,6 +282,8 @@ fun GlassIconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isLoading: Boolean = false,
+    contentDescription: String? = null,
+    tooltipText: String? = null,
     variant: GlassButtonVariant = GlassButtonVariant.Primary,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -291,76 +295,98 @@ fun GlassIconButton(
     val shape = RoundedCornerShape(14.dp) // Squircle for icons
 
     val isSecondary = variant == GlassButtonVariant.Secondary
+    val accessibilityLabel = contentDescription ?: tooltipText
 
-    Box(
-        modifier = modifier
-            .scale(scale)
-            .alpha(opacity)
-            .size(44.dp)
-            .clip(shape)
-            .border(
-                width = 1.dp,
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color.White.copy(alpha = 0.4f),
-                        Color.Transparent,
-                        Color.Black.copy(alpha = 0.25f)
-                    )
-                ),
-                shape = shape
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        if (!isSecondary) {
-            androidx.compose.material3.IconButton(
-                onClick = onClick,
-                modifier = Modifier.matchParentSize(),
-                enabled = enabled,
-                colors = colors,
-                interactionSource = interactionSource,
-                content = {}
-            )
-        } else {
-            Box(modifier = Modifier
-                .matchParentSize()
-                .background(Color.White.copy(alpha = 0.1f)))
-        }
-
-        // Inner highlight
+    val buttonContent = @Composable {
         Box(
-            modifier = Modifier
-                .matchParentSize()
-                .padding(1.dp)
+            modifier = modifier
+                .scale(scale)
+                .alpha(opacity)
+                .size(44.dp)
                 .clip(shape)
-                .background(
-                    Brush.verticalGradient(
+                .border(
+                    width = 1.dp,
+                    brush = Brush.verticalGradient(
                         colors = listOf(
-                            Color.White.copy(alpha = 0.35f),
-                            Color.Transparent
-                        ),
-                        startY = 0f,
-                        endY = 40f
-                    )
+                            Color.White.copy(alpha = 0.4f),
+                            Color.Transparent,
+                            Color.Black.copy(alpha = 0.25f)
+                        )
+                    ),
+                    shape = shape
                 )
-                .clickable(
+                .then(
+                    if (accessibilityLabel != null) {
+                        Modifier.semantics {
+                            this.contentDescription = accessibilityLabel
+                        }
+                    } else Modifier
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            if (!isSecondary) {
+                androidx.compose.material3.IconButton(
+                    onClick = onClick,
+                    modifier = Modifier.matchParentSize(),
+                    enabled = enabled,
+                    colors = colors,
                     interactionSource = interactionSource,
-                    indication = androidx.compose.foundation.LocalIndication.current,
-                    enabled = enabled && !isLoading,
-                    role = Role.Button,
-                    onClick = onClick
-                )
-        )
-        
-        Box(modifier = Modifier) {
-            if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(18.dp),
-                    color = Color.White,
-                    strokeWidth = 2.dp
+                    content = {}
                 )
             } else {
-                content()
+                Box(modifier = Modifier
+                    .matchParentSize()
+                    .background(Color.White.copy(alpha = 0.1f)))
+            }
+
+            // Inner highlight
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .padding(1.dp)
+                    .clip(shape)
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.35f),
+                                Color.Transparent
+                            ),
+                            startY = 0f,
+                            endY = 40f
+                        )
+                    )
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = androidx.compose.foundation.LocalIndication.current,
+                        enabled = enabled && !isLoading,
+                        role = Role.Button,
+                        onClickLabel = accessibilityLabel,
+                        onClick = onClick
+                    )
+            )
+
+            Box(modifier = Modifier) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(18.dp),
+                        color = Color.White,
+                        strokeWidth = 2.dp
+                    )
+                } else {
+                    content()
+                }
             }
         }
+    }
+
+    if (tooltipText != null) {
+        HoverTooltip(
+            text = tooltipText,
+            enabled = enabled
+        ) {
+            buttonContent()
+        }
+    } else {
+        buttonContent()
     }
 }
