@@ -58,6 +58,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -197,7 +202,7 @@ fun TaskFlowList(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add Task",
+                    contentDescription = if (showAddTaskInput) "Close add task form" else "Add task",
                     tint = accentColor,
                     modifier = Modifier.size(20.dp)
                 )
@@ -504,9 +509,10 @@ fun TaskFlowItemCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Interactive Checkbox
+                val checkboxLabel = if (item.isCompleted) "Completed task: ${item.title}" else "Task: ${item.title}"
                 Box(
                     modifier = Modifier
-                        .size(24.dp)
+                        .size(28.dp)
                         .clip(RoundedCornerShape(7.dp))
                         .background(if (item.isCompleted) accentColor else Color.Transparent)
                         .border(
@@ -514,16 +520,24 @@ fun TaskFlowItemCard(
                             color = if (item.isCompleted) accentColor else textSecondary.copy(alpha = 0.5f),
                             shape = RoundedCornerShape(7.dp)
                         )
-                        .clickable {
+                        .clickable(
+                            role = Role.Checkbox,
+                            onClickLabel = if (item.isCompleted) "Mark task incomplete" else "Mark task complete"
+                        ) {
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             onToggleComplete(item)
+                        }
+                        .semantics {
+                            role = Role.Checkbox
+                            stateDescription = if (item.isCompleted) "Completed" else "Not completed"
+                            contentDescription = checkboxLabel
                         },
                     contentAlignment = Alignment.Center
                 ) {
                     if (item.isCompleted) {
                         Icon(
                             imageVector = Icons.Default.Check,
-                            contentDescription = "Checked",
+                            contentDescription = null,
                             tint = if (isDark) Color.Black else Color.White,
                             modifier = Modifier.size(15.dp)
                         )
@@ -615,12 +629,15 @@ fun TaskFlowItemCard(
                     modifier = Modifier
                         .size(28.dp)
                         .clip(CircleShape)
-                        .background(priorityColor.copy(alpha = 0.1f)),
+                        .background(priorityColor.copy(alpha = 0.1f))
+                        .semantics {
+                            contentDescription = "Priority level: ${item.priority}"
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Flag,
-                        contentDescription = "Priority ${item.priority}",
+                        contentDescription = null,
                         tint = priorityColor,
                         modifier = Modifier.size(14.dp)
                     )
