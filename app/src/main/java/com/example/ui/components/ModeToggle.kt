@@ -5,9 +5,9 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Analytics
@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,10 +74,13 @@ fun ModeToggle(
                         .fillMaxHeight()
                         .clip(RoundedCornerShape(20.dp))
                         .background(backgroundColor)
-                        .clickable(
+                        .selectable(
+                            selected = isSelected,
                             interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) { onModeSelected(item.mode) }
+                            indication = null,
+                            role = Role.Tab,
+                            onClick = { onModeSelected(item.mode) }
+                        )
                         .testTag(item.testTag),
                     contentAlignment = Alignment.Center
                 ) {
