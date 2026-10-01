@@ -1,0 +1,3 @@
+## 2025-05-18 - Jetpack Compose Accessibility Semantics for Custom Controls
+**Learning:** Custom Compose controls like glass switches and icon buttons fail screen reader accessibility when using plain `Modifier.clickable`. Custom switches must use `Modifier.toggleable` with `Role.Switch` for TalkBack to announce the switch role and toggle state. Custom icon buttons must set accessibility descriptions via `Modifier.semantics { contentDescription = ... }` instead of misusing `onClickLabel`.
+**Action:** Always use `Modifier.toggleable(..., role = Role.Switch)` for custom toggles and `Modifier.semantics` for custom interactive component accessibility in Jetpack Compose.
