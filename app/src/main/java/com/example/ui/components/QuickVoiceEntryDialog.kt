@@ -255,7 +255,7 @@ fun QuickVoiceEntryDialog(
                     ) {
                         Icon(
                             imageVector = if (isListening) Icons.Default.Stop else Icons.Default.Mic,
-                            contentDescription = "Microphone",
+                            contentDescription = if (isListening) "Stop recording" else "Start voice recording",
                             tint = if (isListening) Color.Red else accentPrimary,
                             modifier = Modifier.size(44.dp)
                         )
