@@ -346,7 +346,7 @@ fun ChatScreen(
                 ) {
                     Icon(
                         imageVector = if (isListening) Icons.Default.MicOff else Icons.Default.Mic,
-                        contentDescription = "Mic",
+                        contentDescription = if (isListening) "Stop voice input" else "Start voice input",
                         tint = if (isListening) Color.Red else MaterialTheme.colorScheme.onSecondaryContainer
                     )
                 }
