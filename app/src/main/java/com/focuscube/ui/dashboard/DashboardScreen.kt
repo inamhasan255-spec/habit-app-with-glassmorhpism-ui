@@ -106,7 +106,7 @@ fun DashboardScreen(
                     com.example.ui.components.GlassIconButton(onClick = { viewModel.clearAllAssignments() }) {
                         Icon(
                             imageVector = Icons.Default.DeleteForever,
-                            contentDescription = "Clear All",
+                            contentDescription = "Clear all assignments",
                             tint = MaterialTheme.colorScheme.error
                         )
                     }
@@ -754,7 +754,7 @@ fun DashboardScreen(
                                 com.example.ui.components.GlassIconButton(onClick = { viewModel.deleteAssignment(assignment.id) }) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
-                                        contentDescription = "Delete",
+                                        contentDescription = "Delete assignment '${assignment.title}'",
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }

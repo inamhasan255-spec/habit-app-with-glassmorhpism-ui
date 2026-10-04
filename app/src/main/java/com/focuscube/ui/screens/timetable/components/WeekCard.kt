@@ -115,7 +115,7 @@ fun WeekCard(
                     IconButton(onClick = { onToggleDone(!habit.isDone) }) {
                         Icon(
                             imageVector = Icons.Default.Check,
-                            contentDescription = "Mark Done",
+                            contentDescription = if (habit.isDone) "Mark '${habit.chapter}' as incomplete" else "Mark '${habit.chapter}' as complete",
                             tint = if (habit.isDone) phaseColor else colors.text.copy(alpha = 0.3f)
                         )
                     }
@@ -126,7 +126,7 @@ fun WeekCard(
                     ) {
                         Icon(
                             imageVector = Icons.Default.PlayArrow,
-                            contentDescription = "Start Focus",
+                            contentDescription = "Start focus session for '${habit.chapter}'",
                             tint = phaseColor
                         )
                         Spacer(modifier = Modifier.width(8.dp))
