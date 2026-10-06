@@ -1230,11 +1230,12 @@ fun SettingsScreen(viewModel: FocusViewModel) {
 
                                 com.example.ui.components.GlassIconButton(
                                     onClick = { viewModel.deleteEssentialItem(item) },
+                                    contentDescription = "Delete essential item",
                                     modifier = Modifier.size(24.dp)
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
-                                        contentDescription = "Delete",
+                                        contentDescription = null,
                                         tint = AccentPink,
                                         modifier = Modifier.size(16.dp)
                                     )
