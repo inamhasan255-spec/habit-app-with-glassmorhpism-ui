@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -278,6 +280,7 @@ fun InteractiveHoverButton(
 fun GlassIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    contentDescription: String? = null,
     enabled: Boolean = true,
     isLoading: Boolean = false,
     variant: GlassButtonVariant = GlassButtonVariant.Primary,
@@ -291,6 +294,12 @@ fun GlassIconButton(
     val shape = RoundedCornerShape(14.dp) // Squircle for icons
 
     val isSecondary = variant == GlassButtonVariant.Secondary
+
+    val semanticModifier = if (contentDescription != null) {
+        Modifier.semantics {
+            this.contentDescription = contentDescription
+        }
+    } else Modifier
 
     Box(
         modifier = modifier
@@ -308,7 +317,8 @@ fun GlassIconButton(
                     )
                 ),
                 shape = shape
-            ),
+            )
+            .then(semanticModifier),
         contentAlignment = Alignment.Center
     ) {
         if (!isSecondary) {
@@ -347,6 +357,7 @@ fun GlassIconButton(
                     indication = androidx.compose.foundation.LocalIndication.current,
                     enabled = enabled && !isLoading,
                     role = Role.Button,
+                    onClickLabel = contentDescription,
                     onClick = onClick
                 )
         )
