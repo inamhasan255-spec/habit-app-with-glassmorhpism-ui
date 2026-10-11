@@ -72,6 +72,7 @@ fun InteractiveTodoList(
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
                 com.example.ui.components.GlassIconButton(
+                    contentDescription = "Add Task",
                     onClick = {
                         if (newTaskTitle.isNotBlank()) {
                             onAddTodo(newTaskTitle)
@@ -79,7 +80,7 @@ fun InteractiveTodoList(
                         }
                     }
                 ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add Task")
+                    Icon(imageVector = Icons.Default.Add, contentDescription = null)
                 }
             },
             singleLine = true,
@@ -161,16 +162,20 @@ fun InteractiveTodoList(
                                 .padding(horizontal = 16.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            com.example.ui.components.GlassIconButton(onClick = {}) {
+                            com.example.ui.components.GlassIconButton(
+                                contentDescription = "Drag Handle",
+                                onClick = {}
+                            ) {
                                 Icon(
                                     imageVector = Icons.Default.DragHandle,
-                                    contentDescription = "Drag Handle",
+                                    contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                                 )
                             }
                             Spacer(modifier = Modifier.width(8.dp))
                             
                             com.example.ui.components.GlassIconButton(
+                                contentDescription = if (todo.isCompleted) "Mark task as incomplete" else "Mark task as complete",
                                 onClick = {
                                     view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
                                     onToggle(todo)
@@ -178,7 +183,7 @@ fun InteractiveTodoList(
                             ) {
                                 Icon(
                                     imageVector = if (todo.isCompleted) Icons.Default.CheckCircle else Icons.Outlined.Circle,
-                                    contentDescription = "Toggle Complete",
+                                    contentDescription = null,
                                     tint = if (todo.isCompleted) Color(0xFF4CAF50) else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
@@ -193,10 +198,13 @@ fun InteractiveTodoList(
                                 textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None
                             )
                             
-                            com.example.ui.components.GlassIconButton(onClick = { onDelete(todo.id) }) {
+                            com.example.ui.components.GlassIconButton(
+                                contentDescription = "Delete Task",
+                                onClick = { onDelete(todo.id) }
+                            ) {
                                 Icon(
                                     imageVector = Icons.Default.Delete,
-                                    contentDescription = "Delete Task",
+                                    contentDescription = null,
                                     tint = MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                                 )
                             }
