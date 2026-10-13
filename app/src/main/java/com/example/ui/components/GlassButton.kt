@@ -28,6 +28,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -281,6 +284,7 @@ fun GlassIconButton(
     enabled: Boolean = true,
     isLoading: Boolean = false,
     variant: GlassButtonVariant = GlassButtonVariant.Primary,
+    contentDescription: String? = null,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable () -> Unit
@@ -292,11 +296,19 @@ fun GlassIconButton(
 
     val isSecondary = variant == GlassButtonVariant.Secondary
 
+    val semanticsModifier = if (contentDescription != null) {
+        Modifier.semantics(mergeDescendants = true) {
+            this.contentDescription = contentDescription
+            this.role = Role.Button
+        }
+    } else Modifier
+
     Box(
         modifier = modifier
             .scale(scale)
             .alpha(opacity)
             .size(44.dp)
+            .then(semanticsModifier)
             .clip(shape)
             .border(
                 width = 1.dp,
