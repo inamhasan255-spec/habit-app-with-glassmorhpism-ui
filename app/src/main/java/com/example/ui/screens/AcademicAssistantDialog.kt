@@ -351,27 +351,37 @@ fun AcademicAssistantDialog(
                         }
                     },
                     navigationIcon = {
-                        com.example.ui.components.GlassIconButton(onClick = onDismiss, modifier = Modifier.testTag("dismiss_assistant_btn")) {
-                            Icon(imageVector = Icons.Default.Close, contentDescription = "Close academic assistant", tint = txtPrimary)
+                        com.example.ui.components.GlassIconButton(
+                            onClick = onDismiss,
+                            contentDescription = "Close academic assistant",
+                            modifier = Modifier.testTag("dismiss_assistant_btn")
+                        ) {
+                            Icon(imageVector = Icons.Default.Close, contentDescription = null, tint = txtPrimary)
                         }
                     },
                     actions = {
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             // Clear history of active thread / delete thread
-                            com.example.ui.components.GlassIconButton(onClick = {
-                                activeThreadId?.let { id ->
-                                    viewModel.deleteAcademicChatThread(id)
-                                    Toast.makeText(context, "Chat thread removed!", Toast.LENGTH_SHORT).show()
-                                }
-                            }) {
-                                Icon(imageVector = Icons.Default.DeleteSweep, contentDescription = "Delete thread", tint = Color.Red.copy(alpha = 0.8f))
+                            com.example.ui.components.GlassIconButton(
+                                onClick = {
+                                    activeThreadId?.let { id ->
+                                        viewModel.deleteAcademicChatThread(id)
+                                        Toast.makeText(context, "Chat thread removed!", Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                contentDescription = "Delete thread"
+                            ) {
+                                Icon(imageVector = Icons.Default.DeleteSweep, contentDescription = null, tint = Color.Red.copy(alpha = 0.8f))
                             }
                             // Create New Chat Thread
-                            com.example.ui.components.GlassIconButton(onClick = {
-                                viewModel.createAcademicChatThread("Homework help ${threads.size + 1}")
-                                Toast.makeText(context, "New chat thread created!", Toast.LENGTH_SHORT).show()
-                            }) {
-                                Icon(imageVector = Icons.Default.AddComment, contentDescription = "New thread", tint = accentColor)
+                            com.example.ui.components.GlassIconButton(
+                                onClick = {
+                                    viewModel.createAcademicChatThread("Homework help ${threads.size + 1}")
+                                    Toast.makeText(context, "New chat thread created!", Toast.LENGTH_SHORT).show()
+                                },
+                                contentDescription = "New thread"
+                            ) {
+                                Icon(imageVector = Icons.Default.AddComment, contentDescription = null, tint = accentColor)
                             }
                         }
                     },
@@ -701,8 +711,12 @@ fun AcademicAssistantDialog(
                                     Text("Photo attached for analysis", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = txtPrimary)
                                     Text("Image understanding: gemini-3.1-pro-preview", fontSize = 10.sp, color = accentColor)
                                 }
-                                com.example.ui.components.GlassIconButton(onClick = { selectedImageUri = null }, modifier = Modifier.size(24.dp)) {
-                                    Icon(imageVector = Icons.Default.Close, contentDescription = "Remove Photo", tint = Color.Red, modifier = Modifier.size(16.dp))
+                                com.example.ui.components.GlassIconButton(
+                                    onClick = { selectedImageUri = null },
+                                    contentDescription = "Remove Photo",
+                                    modifier = Modifier.size(24.dp)
+                                ) {
+                                    Icon(imageVector = Icons.Default.Close, contentDescription = null, tint = Color.Red, modifier = Modifier.size(16.dp))
                                 }
                             }
                         }
@@ -714,8 +728,11 @@ fun AcademicAssistantDialog(
                             modifier = Modifier.navigationBarsPadding().imePadding()
                         ) {
                             // Camera/Gallery Trigger
-                            com.example.ui.components.GlassIconButton(onClick = { imagePickerLauncher.launch("image/*") }) {
-                                Icon(imageVector = Icons.Default.AddPhotoAlternate, contentDescription = "Attach photo", tint = accentColor)
+                            com.example.ui.components.GlassIconButton(
+                                onClick = { imagePickerLauncher.launch("image/*") },
+                                contentDescription = "Attach photo"
+                            ) {
+                                Icon(imageVector = Icons.Default.AddPhotoAlternate, contentDescription = null, tint = accentColor)
                             }
 
                             // Text Input Field
@@ -735,8 +752,11 @@ fun AcademicAssistantDialog(
                             )
 
                             // Mic Mode Toggle
-                            com.example.ui.components.GlassIconButton(onClick = { micModeActive = true }) {
-                                Icon(imageVector = Icons.Default.Mic, contentDescription = "Voice mode", tint = txtSecondary)
+                            com.example.ui.components.GlassIconButton(
+                                onClick = { micModeActive = true },
+                                contentDescription = "Voice mode"
+                            ) {
+                                Icon(imageVector = Icons.Default.Mic, contentDescription = null, tint = txtSecondary)
                             }
 
                             // Send Button
@@ -751,6 +771,7 @@ fun AcademicAssistantDialog(
                                         selectedImageUri = null
                                     }
                                 },
+                                contentDescription = "Send message",
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .background(accentColor)
@@ -760,7 +781,7 @@ fun AcademicAssistantDialog(
                                 if (isChatLoading) {
                                     CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp, color = Color.White)
                                 } else {
-                                    Icon(imageVector = Icons.AutoMirrored.Filled.Send, contentDescription = "Send", tint = Color.White)
+                                    Icon(imageVector = Icons.AutoMirrored.Filled.Send, contentDescription = null, tint = Color.White)
                                 }
                             }
                         }
@@ -906,10 +927,14 @@ fun AcademicChatBubble(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End
                         ) {
-                            com.example.ui.components.GlassIconButton(onClick = onTtsSpeak, modifier = Modifier.size(24.dp)) {
+                            com.example.ui.components.GlassIconButton(
+                                onClick = onTtsSpeak,
+                                contentDescription = "Read aloud",
+                                modifier = Modifier.size(24.dp)
+                            ) {
                                 Icon(
                                     imageVector = Icons.Default.VolumeUp,
-                                    contentDescription = "Read aloud",
+                                    contentDescription = null,
                                     tint = txtSecondary,
                                     modifier = Modifier.size(16.dp)
                                 )
