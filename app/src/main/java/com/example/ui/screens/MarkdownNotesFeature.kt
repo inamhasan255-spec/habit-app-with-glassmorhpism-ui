@@ -155,12 +155,15 @@ fun LuminaMarkdownNotesSheet(viewModel: FocusViewModel, onDismiss: () -> Unit) {
             if (selectedNote != null) {
                 // Display Note Content
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 12.dp)) {
-                    com.example.ui.components.GlassIconButton(onClick = { 
-                        selectedNote = null
-                        aiSummary = null
-                        isSummarizing = false
-                    }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = viewModel.themeText)
+                    com.example.ui.components.GlassIconButton(
+                        onClick = {
+                            selectedNote = null
+                            aiSummary = null
+                            isSummarizing = false
+                        },
+                        contentDescription = "Back to notes"
+                    ) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = null, tint = viewModel.themeText)
                     }
                     Text(
                         text = selectedNote!!.first,
@@ -176,14 +179,17 @@ fun LuminaMarkdownNotesSheet(viewModel: FocusViewModel, onDismiss: () -> Unit) {
                             strokeWidth = 2.dp
                         )
                     } else {
-                        com.example.ui.components.GlassIconButton(onClick = {
-                            isSummarizing = true
-                            viewModel.summarizeTextFast(selectedNote!!.second) { summary ->
-                                aiSummary = summary
-                                isSummarizing = false
-                            }
-                        }) {
-                            Icon(Icons.Default.AutoAwesome, contentDescription = "Summarize", tint = accentColor)
+                        com.example.ui.components.GlassIconButton(
+                            onClick = {
+                                isSummarizing = true
+                                viewModel.summarizeTextFast(selectedNote!!.second) { summary ->
+                                    aiSummary = summary
+                                    isSummarizing = false
+                                }
+                            },
+                            contentDescription = "Summarize note with AI"
+                        ) {
+                            Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = accentColor)
                         }
                     }
                 }

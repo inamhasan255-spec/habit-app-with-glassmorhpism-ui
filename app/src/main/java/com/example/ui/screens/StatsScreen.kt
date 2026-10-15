@@ -820,8 +820,11 @@ fun BadgeCard(badge: com.example.data.Badge, viewModel: FocusViewModel, index: I
                 )
             }
             if (badge.unlocked) {
-                IconButton(onClick = onShare) {
-                    Icon(androidx.compose.material.icons.Icons.Default.Share, contentDescription = "Share", tint = accentColor)
+                com.example.ui.components.GlassIconButton(
+                    onClick = onShare,
+                    contentDescription = "Share badge"
+                ) {
+                    Icon(androidx.compose.material.icons.Icons.Default.Share, contentDescription = null, tint = accentColor)
                 }
             }
         }
