@@ -1002,9 +1002,10 @@ fun FocusHomeDashboard(viewModel: FocusViewModel) {
                                                         newList[index - 1] = temp
                                                         viewModel.saveWidgetsToPrefs(newList)
                                                     },
+                                                    contentDescription = "Move Up",
                                                     modifier = Modifier.size(24.dp)
                                                 ) {
-                                                    Icon(Icons.Default.ArrowUpward, contentDescription = "Move Up", tint = viewModel.themeTextSecondary, modifier = Modifier.size(14.dp))
+                                                    Icon(Icons.Default.ArrowUpward, contentDescription = null, tint = viewModel.themeTextSecondary, modifier = Modifier.size(14.dp))
                                                 }
                                             }
                                             // Reorder Down
@@ -1017,9 +1018,10 @@ fun FocusHomeDashboard(viewModel: FocusViewModel) {
                                                         newList[index + 1] = temp
                                                         viewModel.saveWidgetsToPrefs(newList)
                                                     },
+                                                    contentDescription = "Move Down",
                                                     modifier = Modifier.size(24.dp)
                                                 ) {
-                                                    Icon(Icons.Default.ArrowDownward, contentDescription = "Move Down", tint = viewModel.themeTextSecondary, modifier = Modifier.size(14.dp))
+                                                    Icon(Icons.Default.ArrowDownward, contentDescription = null, tint = viewModel.themeTextSecondary, modifier = Modifier.size(14.dp))
                                                 }
                                             }
                                             // Remove
@@ -1029,9 +1031,10 @@ fun FocusHomeDashboard(viewModel: FocusViewModel) {
                                                     newList.removeAt(index)
                                                     viewModel.saveWidgetsToPrefs(newList)
                                                 },
+                                                contentDescription = "Remove widget",
                                                 modifier = Modifier.size(24.dp)
                                             ) {
-                                                Icon(Icons.Default.Delete, contentDescription = "Remove", tint = Color.Red, modifier = Modifier.size(14.dp))
+                                                Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red, modifier = Modifier.size(14.dp))
                                             }
                                         }
                                     }
@@ -2921,11 +2924,12 @@ fun LuminaNowPlayingCard(
                         val currentIndex = soundList.indexOf(viewModel.selectedAmbientSound)
                         val prevIndex = if (currentIndex <= 0) soundList.size - 1 else currentIndex - 1
                         viewModel.selectAmbientSound(soundList[prevIndex])
-                    }
+                    },
+                    contentDescription = "Previous Track"
                 ) {
                     Icon(
                         imageVector = Icons.Default.ChevronRight,
-                        contentDescription = "Previous Track",
+                        contentDescription = null,
                         tint = viewModel.themeText,
                         modifier = Modifier
                             .size(28.dp)
@@ -2964,11 +2968,12 @@ fun LuminaNowPlayingCard(
                         val currentIndex = soundList.indexOf(viewModel.selectedAmbientSound)
                         val nextIndex = (currentIndex + 1) % soundList.size
                         viewModel.selectAmbientSound(soundList[nextIndex])
-                    }
+                    },
+                    contentDescription = "Next Track"
                 ) {
                     Icon(
                         imageVector = Icons.Default.ChevronRight,
-                        contentDescription = "Next Track",
+                        contentDescription = null,
                         tint = viewModel.themeText,
                         modifier = Modifier.size(28.dp)
                     )
