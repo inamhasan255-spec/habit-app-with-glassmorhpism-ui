@@ -155,12 +155,15 @@ fun LuminaMarkdownNotesSheet(viewModel: FocusViewModel, onDismiss: () -> Unit) {
             if (selectedNote != null) {
                 // Display Note Content
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 12.dp)) {
-                    com.example.ui.components.GlassIconButton(onClick = { 
-                        selectedNote = null
-                        aiSummary = null
-                        isSummarizing = false
-                    }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = viewModel.themeText)
+                    com.example.ui.components.GlassIconButton(
+                        onClick = {
+                            selectedNote = null
+                            aiSummary = null
+                            isSummarizing = false
+                        },
+                        contentDescription = "Back"
+                    ) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = null, tint = viewModel.themeText)
                     }
                     Text(
                         text = selectedNote!!.first,
