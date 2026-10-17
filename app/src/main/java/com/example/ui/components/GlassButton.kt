@@ -296,12 +296,12 @@ fun GlassIconButton(
 
     val isSecondary = variant == GlassButtonVariant.Secondary
 
-    val semanticsModifier = if (contentDescription != null) {
-        Modifier.semantics(mergeDescendants = true) {
+    val semanticsModifier = Modifier.semantics(mergeDescendants = true) {
+        if (contentDescription != null) {
             this.contentDescription = contentDescription
-            this.role = Role.Button
         }
-    } else Modifier
+        this.role = Role.Button
+    }
 
     Box(
         modifier = modifier
@@ -310,6 +310,7 @@ fun GlassIconButton(
             .size(44.dp)
             .then(semanticsModifier)
             .clip(shape)
+            .background(if (isSecondary) Color.White.copy(alpha = 0.1f) else colors.containerColor)
             .border(
                 width = 1.dp,
                 brush = Brush.verticalGradient(
@@ -320,24 +321,16 @@ fun GlassIconButton(
                     )
                 ),
                 shape = shape
+            )
+            .clickable(
+                interactionSource = interactionSource,
+                indication = androidx.compose.foundation.LocalIndication.current,
+                enabled = enabled && !isLoading,
+                role = Role.Button,
+                onClick = onClick
             ),
         contentAlignment = Alignment.Center
     ) {
-        if (!isSecondary) {
-            androidx.compose.material3.IconButton(
-                onClick = onClick,
-                modifier = Modifier.matchParentSize(),
-                enabled = enabled,
-                colors = colors,
-                interactionSource = interactionSource,
-                content = {}
-            )
-        } else {
-            Box(modifier = Modifier
-                .matchParentSize()
-                .background(Color.White.copy(alpha = 0.1f)))
-        }
-
         // Inner highlight
         Box(
             modifier = Modifier
@@ -354,16 +347,9 @@ fun GlassIconButton(
                         endY = 40f
                     )
                 )
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = androidx.compose.foundation.LocalIndication.current,
-                    enabled = enabled && !isLoading,
-                    role = Role.Button,
-                    onClick = onClick
-                )
         )
         
-        Box(modifier = Modifier) {
+        Box(contentAlignment = Alignment.Center) {
             if (isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(18.dp),
