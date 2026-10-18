@@ -103,10 +103,13 @@ fun DashboardScreen(
                     }
                 },
                 actions = {
-                    com.example.ui.components.GlassIconButton(onClick = { viewModel.clearAllAssignments() }) {
+                    com.example.ui.components.GlassIconButton(
+                        onClick = { viewModel.clearAllAssignments() },
+                        contentDescription = "Clear All"
+                    ) {
                         Icon(
                             imageVector = Icons.Default.DeleteForever,
-                            contentDescription = "Clear All",
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.error
                         )
                     }
@@ -751,10 +754,13 @@ fun DashboardScreen(
                                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                                     )
                                 }
-                                com.example.ui.components.GlassIconButton(onClick = { viewModel.deleteAssignment(assignment.id) }) {
+                                com.example.ui.components.GlassIconButton(
+                                    onClick = { viewModel.deleteAssignment(assignment.id) },
+                                    contentDescription = "Delete"
+                                ) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
-                                        contentDescription = "Delete",
+                                        contentDescription = null,
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
