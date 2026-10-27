@@ -351,27 +351,37 @@ fun AcademicAssistantDialog(
                         }
                     },
                     navigationIcon = {
-                        com.example.ui.components.GlassIconButton(onClick = onDismiss, modifier = Modifier.testTag("dismiss_assistant_btn")) {
-                            Icon(imageVector = Icons.Default.Close, contentDescription = "Close academic assistant", tint = txtPrimary)
+                        com.example.ui.components.GlassIconButton(
+                            onClick = onDismiss,
+                            modifier = Modifier.testTag("dismiss_assistant_btn"),
+                            contentDescription = "Close academic assistant"
+                        ) {
+                            Icon(imageVector = Icons.Default.Close, contentDescription = null, tint = txtPrimary)
                         }
                     },
                     actions = {
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             // Clear history of active thread / delete thread
-                            com.example.ui.components.GlassIconButton(onClick = {
-                                activeThreadId?.let { id ->
-                                    viewModel.deleteAcademicChatThread(id)
-                                    Toast.makeText(context, "Chat thread removed!", Toast.LENGTH_SHORT).show()
-                                }
-                            }) {
-                                Icon(imageVector = Icons.Default.DeleteSweep, contentDescription = "Delete thread", tint = Color.Red.copy(alpha = 0.8f))
+                            com.example.ui.components.GlassIconButton(
+                                onClick = {
+                                    activeThreadId?.let { id ->
+                                        viewModel.deleteAcademicChatThread(id)
+                                        Toast.makeText(context, "Chat thread removed!", Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                contentDescription = "Delete thread"
+                            ) {
+                                Icon(imageVector = Icons.Default.DeleteSweep, contentDescription = null, tint = Color.Red.copy(alpha = 0.8f))
                             }
                             // Create New Chat Thread
-                            com.example.ui.components.GlassIconButton(onClick = {
-                                viewModel.createAcademicChatThread("Homework help ${threads.size + 1}")
-                                Toast.makeText(context, "New chat thread created!", Toast.LENGTH_SHORT).show()
-                            }) {
-                                Icon(imageVector = Icons.Default.AddComment, contentDescription = "New thread", tint = accentColor)
+                            com.example.ui.components.GlassIconButton(
+                                onClick = {
+                                    viewModel.createAcademicChatThread("Homework help ${threads.size + 1}")
+                                    Toast.makeText(context, "New chat thread created!", Toast.LENGTH_SHORT).show()
+                                },
+                                contentDescription = "New thread"
+                            ) {
+                                Icon(imageVector = Icons.Default.AddComment, contentDescription = null, tint = accentColor)
                             }
                         }
                     },
