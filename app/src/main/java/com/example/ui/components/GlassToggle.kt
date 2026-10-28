@@ -4,9 +4,9 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,6 +15,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.ui.theme.LuminaTheme
@@ -25,6 +28,7 @@ fun GlassToggle(
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    contentDescription: String? = null,
     width: Dp = 52.dp,
     height: Dp = 32.dp,
     thumbSize: Dp = 24.dp,
@@ -71,20 +75,28 @@ fun GlassToggle(
         label = "border_color"
     )
 
+    val semanticsModifier = if (contentDescription != null) {
+        Modifier.semantics {
+            this.contentDescription = contentDescription
+        }
+    } else Modifier
+
     Box(
         modifier = modifier
             .width(width)
             .height(height)
+            .then(semanticsModifier)
             .clip(CircleShape)
             .background(trackColor)
             .border(borderWidth, borderColor, CircleShape)
-            .clickable(
+            .toggleable(
+                value = checked,
                 interactionSource = interactionSource,
                 indication = null, // Disable default ripple for custom tactile feel
-                enabled = enabled
-            ) {
-                onCheckedChange(!checked)
-            },
+                enabled = enabled,
+                role = Role.Switch,
+                onValueChange = onCheckedChange
+            ),
         contentAlignment = Alignment.CenterStart
     ) {
         // Thumb
