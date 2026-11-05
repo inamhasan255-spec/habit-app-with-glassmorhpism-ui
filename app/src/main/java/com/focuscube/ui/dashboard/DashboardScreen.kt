@@ -73,6 +73,7 @@ fun DashboardScreen(
     var isAudioPlaying by remember { mutableStateOf(StereoBinauralEngine.isCurrentlyPlaying()) }
 
     var showAddDialog by remember { mutableStateOf(false) }
+    var showClearAllConfirmation by remember { mutableStateOf(false) }
 
     // Calculate if any task is in deficit
     val hasDeficit = assignmentsWithCushions.any { it.second < 0.0 } || blockState == com.focuscube.data.model.BlockState.STRICT_LOCK
@@ -103,7 +104,7 @@ fun DashboardScreen(
                     }
                 },
                 actions = {
-                    com.example.ui.components.GlassIconButton(onClick = { viewModel.clearAllAssignments() }) {
+                    com.example.ui.components.GlassIconButton(onClick = { showClearAllConfirmation = true }) {
                         Icon(
                             imageVector = Icons.Default.DeleteForever,
                             contentDescription = "Clear All",
@@ -856,6 +857,32 @@ fun DashboardScreen(
             },
             dismissButton = {
                 com.example.ui.components.GlassButton(variant = com.example.ui.components.GlassButtonVariant.Secondary, onClick = { showAddDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
+    if (showClearAllConfirmation) {
+        AlertDialog(
+            onDismissRequest = { showClearAllConfirmation = false },
+            title = { Text("Clear All Assignments?") },
+            text = { Text("Are you sure you want to delete all assignments? This action cannot be undone.") },
+            confirmButton = {
+                com.example.ui.components.GlassButton(
+                    onClick = {
+                        viewModel.clearAllAssignments()
+                        showClearAllConfirmation = false
+                    }
+                ) {
+                    Text("Clear All")
+                }
+            },
+            dismissButton = {
+                com.example.ui.components.GlassButton(
+                    variant = com.example.ui.components.GlassButtonVariant.Secondary,
+                    onClick = { showClearAllConfirmation = false }
+                ) {
                     Text("Cancel")
                 }
             }
