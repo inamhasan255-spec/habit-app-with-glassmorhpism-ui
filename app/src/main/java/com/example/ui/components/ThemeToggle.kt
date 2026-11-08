@@ -4,8 +4,8 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
@@ -19,6 +19,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.data.FocusViewModel
 
@@ -48,11 +51,18 @@ fun ThemeToggle(
 
     Box(
         modifier = modifier
+            .semantics {
+                contentDescription = "Toggle dark mode"
+            }
             .width(56.dp)
             .height(32.dp)
             .clip(CircleShape)
             .background(viewModel.themeGlassFill)
-            .clickable { viewModel.toggleDarkMode() }
+            .toggleable(
+                value = isDark,
+                role = Role.Switch,
+                onValueChange = { viewModel.toggleDarkMode() }
+            )
             .padding(4.dp)
             .testTag("theme_toggle_widget"),
         contentAlignment = Alignment.CenterStart
@@ -71,7 +81,7 @@ fun ThemeToggle(
         ) {
             Icon(
                 imageVector = if (isDark) Icons.Default.DarkMode else Icons.Default.LightMode,
-                contentDescription = if (isDark) "Switch to Light Mode" else "Switch to Dark Mode",
+                contentDescription = null,
                 tint = if (isDark) Color.Black else Color.White,
                 modifier = Modifier
                     .size(15.dp)
